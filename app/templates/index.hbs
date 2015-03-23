@@ -1,0 +1,147 @@
+<div class="row">
+  <div class="col-sm-6">
+    <label>
+      Gather data from...
+      {{#if loadingLocation}}
+        <div class="sk-spinner sk-spinner-three-bounce pull-right">
+          <div class="sk-bounce1"></div>
+          <div class="sk-bounce2"></div>
+          <div class="sk-bounce3"></div>
+        </div>
+      {{/if}}
+    </label>
+    
+    {{input class="form-control" placeholder="A city name, zipcode, or lat/lng coordinates" value=user.location}}
+  </div>
+
+  <div class="col-sm-3">
+    <label>Beginning from...</label>
+    {{date-picker class="form-control" date=startDate}}
+  </div>
+
+  <div class="col-sm-3">
+    <label>Ending at...</label>
+    {{date-picker class="form-control" date=endDate}}
+  </div>
+</div>
+
+{{#if results}}
+<h4>Breakdown</h4>
+<div class="row">
+  <div class="col-sm-4 text-center">
+    <h5>Sunny Days</h5>
+    {{easy-pie-chart dataPercent=percentSunny percentText=percentSunny barColor="#000" trackColor="#fff" }}
+  </div>
+  <div class="col-sm-4 text-center">
+    <h5>Cloudy Days</h5>
+    {{easy-pie-chart dataPercent=percentCloudy percentText=percentCloudy barColor="#000" trackColor="#fff" }}
+  </div>
+  <div class="col-sm-4 text-center">
+    <h5>Partially Cloudy</h5>
+    {{easy-pie-chart dataPercent=percentPartial percentText=percentPartial barColor="#000" trackColor="#fff" }}
+  </div>
+</div>
+
+<h4>Temperature</h4>
+<div class="row">
+  <div class="col-sm-8">
+    {{data-graphic
+      description="Temperature"
+      data=results
+      width=500
+      height=200
+      x_accessor="createdAt"
+      y_accessor="averageTemp"
+      interpolate="monotone"
+    }}
+  </div>
+  <div class="col-sm-4">
+    <table class="table">
+      <tbody>
+        <tr>
+          <td>Average</td>
+          <td>{{averageTemperature}}</td>
+        </tr>
+        <tr>
+          <td>Maximum</td>
+          <td>{{maxTemperature}}</td>
+        </tr>
+        <tr>
+          <td>Minimum</td>
+          <td>{{minTemperature}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h4>Rainfall</h4>
+<div class="row">
+  <div class="col-sm-8">
+    {{data-graphic
+      description="Rainfall"
+      data=results
+      width=500
+      height=200
+      x_accessor="createdAt"
+      y_accessor="rainfall"
+      interpolate="monotone"
+    }}
+  </div>
+  <div class="col-sm-4">
+    <table class="table">
+      <tbody>
+        <tr>
+          <td>Average</td>
+          <td>{{averageRainfall}} cm</td>
+        </tr>
+        <tr>
+          <td>Maximum</td>
+          <td>{{maxRainfall}} cm</td>
+        </tr>
+        <tr>
+          <td>Minimum</td>
+          <td>{{minRainfall}} cm</td>
+        </tr>
+        <tr>
+          <td>Total</td>
+          <td>{{totalRainfall}} cm</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h4>Humidity</h4>
+<div class="row">
+  <div class="col-sm-8">
+    {{data-graphic
+      description="Humidity"
+      data=results
+      width=500
+      height=200
+      x_accessor="createdAt"
+      y_accessor="humidity"
+      interpolate="monotone"
+    }}
+  </div>
+  <div class="col-sm-4">
+    <table class="table">
+      <tbody>
+        <tr>
+          <td>Average</td>
+          <td>{{averageHumidity}}%</td>
+        </tr>
+        <tr>
+          <td>Maximum</td>
+          <td>{{maxHumidity}}%</td>
+        </tr>
+        <tr>
+          <td>Minimum</td>
+          <td>{{minHumidity}}%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{{/if}}
